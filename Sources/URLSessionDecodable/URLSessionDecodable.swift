@@ -87,6 +87,9 @@ extension URLSession {
         }
 
         do {
+            if data.isEmpty {
+                return try .success(decoder.decode(T.self, from: "{}".data(using: .utf8)!))
+            }
             return try .success(decoder.decode(T.self, from: data))
         } catch {
             os_log("%@", "Error while decoding \(String(describing: type(of: T.self))) \(error)")
